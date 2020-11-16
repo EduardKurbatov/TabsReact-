@@ -65,12 +65,9 @@
     margin: 0 auto;
   }
 
-  .tab .content {
-    visibility: hidden;
-  }
-  
  .tabbtn.active {
   background: lightseagreen;
+
 } 
 .close {
   position: absolute;

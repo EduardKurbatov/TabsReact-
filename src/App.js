@@ -1,14 +1,13 @@
-import React from "react";
-import "./App.css";
-import Tabs from "./components/Tabs";
-import "./css/Tabs.css";
-import AddTabBtn from "./components/AddTabBtn";
+import React from 'react';
+import './App.css';
+import Tabs from './components/Tabs';
+import './css/Tabs.css';
+import AddTabBtn from './components/AddTabBtn';
 const { v4: uuidv4 } = require('uuid');
-
 
 class App extends React.Component {
   state = {
-    tabsInfo: [
+    tabsList: [
       {
         id: uuidv4(),
         title: `Tab #1`,
@@ -32,42 +31,38 @@ class App extends React.Component {
 
   setActiveTab = id => {
     this.setState({
-      tabsInfo: this.state.tabsInfo.map(tab => {
+      tabsList: this.state.tabsList.map(tab => {
         tab.active = tab.id === id;
         return tab;
       })
     });
   };
 
-
   delTab = id => {
-    this.state.tabsInfo = this.state.tabsInfo.filter(tab => tab.id !== id); // same filter
-    this.state.tabsInfo.map(tab => {
+    this.state.tabsList = this.state.tabsList.filter(tab => tab.id !== id);
+    this.state.tabsList.map(tab => {
       tab.active = tab.id === id;
       return tab;
-    })
-    if (this.state.tabsInfo.length) {
-      this.setActiveTab(this.state.tabsInfo[0].id);
-    } 
-    this.setState({
-      tabsInfo: this.state.tabsInfo
     });
-    return this.state.tabsInfo.length
-  };
-  
-  
-  addTab = () => {
-    let addedTab = {
-    id: uuidv4(),
-    title: `Tab#${this.state.tabsInfo.length + 1}`,
-    content: `It's a content of Tab #${this.state.tabsInfo.length + 1}`,
-    active: false
+    if (this.state.tabsList.length) {
+      this.setActiveTab(this.state.tabsList[0].id);
     }
-    
     this.setState({
-    tabsinfo: this.state.tabsInfo.push(addedTab)
-  })
-  this.delTab();
+      tabsList: this.state.tabsList
+    });
+  };
+
+  addTab = () => {
+    const newTab = {
+      id: uuidv4(),
+      title: `Tab#${this.state.tabsList.length + 1}`,
+      content: `It's a content of Tab #${this.state.tabsList.length + 1}`,
+      active: false
+    };
+    this.state.tabsList.push(newTab);
+    this.setState({
+      tabsList: this.state.tabsList
+    })
   };
 
   render() {
@@ -76,11 +71,11 @@ class App extends React.Component {
         <div className="main">
           <div className="tabs">
             <Tabs
-              tabs={this.state.tabsInfo}
+              tabs={this.state.tabsList}
               delTab={this.delTab}
               setActiveTab={this.setActiveTab}
             />
-            <AddTabBtn addTab={this.addTab}/>
+            <AddTabBtn addTab={this.addTab} />
           </div>
         </div>
       </div>
